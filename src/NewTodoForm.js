@@ -38,8 +38,6 @@ export default class Form extends React.Component {
                 label="todo..."
                 margin="normal"
                 value={text}
-                
-            
             />
         )
     }

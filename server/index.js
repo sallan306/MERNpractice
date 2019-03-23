@@ -1,26 +1,28 @@
 const { GraphQLServer } = require('graphql-yoga')
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/MERNtest');
+mongoose.connect('mongodb://localhost/MERNtest', { useNewUrlParser: true });
 
 const Todo = mongoose.model('Todo', {
-    text: String,
-    complete: Boolean
+  text: String,
+  complete: Boolean
 });
 
-const typeDefs = `
+const typeDefs =
+ `
   type Query {
     hello(name: String): String!
     todos: [Todo]
   }
   type Todo {
-      id: ID!
-      text: String!
-      complete: Boolean!
+    id: ID!
+    text: String!
+    complete: Boolean!
   }
   type Mutation {
-      createTodo(text: String!) : Todo
-      updateTodo(id: ID!, complete: Boolean!): Boolean
-      removeTodo(id: ID!): Boolean
+    createTodo(text: String!) : Todo
+    changeTodoName(id: ID!, text: String) : Boolean
+    updateTodo(id: ID!, complete: Boolean!): Boolean
+    removeTodo(id: ID!): Boolean
   }
 `
 const resolvers = {
@@ -29,19 +31,24 @@ const resolvers = {
     todos: () => Todo.find()
   },
   Mutation: {
-      createTodo: async (_, {text}) => {
-          const todo = new Todo({ text, complete: false});
-          await todo.save();
-          return todo
-      },
-      updateTodo: async (_, {id, complete}) => {
-        await Todo.findByIdAndUpdate(id, {complete})
-        return true;
-      },
-      removeTodo: async (_, {id}) => {
-          await Todo.findByIdAndRemove(id)
-          return true;
-      }
+    createTodo: async (_, {text}) => {
+      const todo = new Todo({ text, complete: false});
+      await todo.save();
+      return todo
+    },
+    updateTodo: async (_, {id, complete}) => {
+      await Todo.findByIdAndUpdate(id, {complete})
+      return true;
+    },
+    removeTodo: async (_, {id}) => {
+      await Todo.findByIdAndRemove(id)
+      return true;
+    },
+    changeTodoName: async (_,{id, text}) => {
+      await Todo.findByIdAndUpdate(id, {text})
+      return true;
+    }
+  
   }
 }
  
