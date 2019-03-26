@@ -41,9 +41,18 @@ export default class Form extends React.Component {
 
             }
             else {
-                submitPayload.title === "" ? this.setState({titleError: true}) : this.setState({titleError: false})
-                submitPayload.releaseDate === "" ? this.setState({releaseDateError: true}) : this.setState({releaseDateError: false})
-                submitPayload.author === "" ? this.setState({authorError: true}) : this.setState({authorError: false})
+                if (submitPayload.title === "") {
+                    this.setState({titleError: true})  
+                    setTimeout( () => this.setState({titleError: false}) ,1000)
+                }
+                if (submitPayload.releaseDate === "") {
+                    this.setState({releaseDateError: true})
+                    setTimeout( () => this.setState({releaseDateError: false}) ,1000)
+                }  
+                if (submitPayload.author === "") {
+                    this.setState({authorError: true})
+                    setTimeout( () => this.setState({authorError: false}) ,1000)
+                }  
             }
         }
     }

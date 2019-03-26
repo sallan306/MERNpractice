@@ -36,6 +36,7 @@ export default class Form extends React.Component {
                 onKeyDown={this.handleKeyDown}
                 onChange={this.handleChange}
                 label="todo..."
+                variant="outlined"
                 margin="normal"
                 value={text}
             />

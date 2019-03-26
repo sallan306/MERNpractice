@@ -4,7 +4,8 @@ import TextField from "@material-ui/core/TextField"
 
 export default class FormChange extends React.Component {
     state = {
-        text: ""
+        text: "",
+        display: "none"
     }
     
     handleChange = e => {
@@ -18,6 +19,7 @@ export default class FormChange extends React.Component {
         const {text} = this.state
         return (
             <TextField  
+                style={{display: this.state.display}}
                 onChange={this.handleChange}
                 label="Change Task"
                 margin="normal"

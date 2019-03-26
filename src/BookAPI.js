@@ -43,7 +43,7 @@ const DeleteBookMutation = gql`
     }
  `
  
- class API2 extends React.Component {
+ class BookAPI extends React.Component {
      constructor() {
          super()
          this.state = {
@@ -107,34 +107,34 @@ const DeleteBookMutation = gql`
           return null
         }
         return (
-          <div style={{display: "flex"}}>
+          <div style={{display: this.props.bookDisplay}} >
             <div style={{margin: "auto", width: 400}}>
 
             <Paper elevation={1}>
                 <NewBookForm submit={this.createBook}/>
                 <List>
-                {books.map(book => (
-                        <ListItem 
-                            button 
-                            key={book.id}
-                            dense
-                            disableRipple
-                            >
+                    {books.map(book => (
+                            <ListItem 
+                                button 
+                                key={book.id}
+                                dense
+                                disableRipple
+                                >
 
-                            <Checkbox
-                                onClick={() => this.updateBook(book)}
-                                primary={"read"}
-                                checked={book.isRead}
-                                tabIndex/>
-                            <ListItemText 
-                                primary={book.title} 
-                                secondary={"Author: "+book.author+" Release date: "+book.releaseDate}
-                            />
-                            <ListItemSecondaryAction>
-                            <IconButton onClick={() => this.deleteBook(book)}><CloseIcon/></IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                ))}
+                                <Checkbox
+                                    onClick={() => this.updateBook(book)}
+                                    primary={"read"}
+                                    checked={book.isRead}
+                                    tabIndex={book.id}/>
+                                <ListItemText 
+                                    primary={book.title} 
+                                    secondary={"Author: "+book.author+" Release date: "+book.releaseDate}
+                                />
+                                <ListItemSecondaryAction>
+                                <IconButton onClick={() => this.deleteBook(book)}><CloseIcon/></IconButton>
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                    ))}
                 </List>
             </Paper>
 
@@ -152,6 +152,6 @@ export default compose(
     graphql(UpdateBookMutation, {name: "updateBook"}),
     graphql(DeleteBookMutation, {name: "deleteBook"})
 
-)(API2)
+)(BookAPI)
 
 //enter function here
